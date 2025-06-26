@@ -13,10 +13,16 @@ class CarPark:
     def __str__(self):
         return f"Car park at {self.location}, with {self.capacity} bays."
 
+    @property
+    def available_bays(self):
+        return self.capacity - len(self.plates)
+
     def update_displays(self):
-        message = "{available_bays or FULL}"
-        for display in self.displays:
-            display.update(message)
+        data = {
+            "available_bays": self.available_bays,
+            "temperature": 25,
+            "location": self.location
+        }
 
     def register(self, component):
         if not isinstance(component, (Sensor, Display)):
@@ -27,8 +33,17 @@ class CarPark:
         elif isinstance(component, Display):
             self.displays.append(component)
 
-    def add_car(self):
-        ...
+    def add_car(self, plate):
+        if plate in self.plates:
+            print(f"Car {plate} is already parked.")
+        else:
+            self.plates.append(plate)
+            self.update_displays()
 
-    def remove_car(self):
-        ...
+    def remove_car(self, plate):
+        if plate in self.plates:
+            self.plates.remove(plate)
+            self.update_displays()
+        else:
+            print(f"Car {plate} not found.")
+
