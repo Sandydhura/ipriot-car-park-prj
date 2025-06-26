@@ -392,11 +392,13 @@ For example, you may want to see the number of available bays, the current tempe
 Now consider, between the `CarPark`, `Sensor`, and `Display` classes, which class is responsible for each piece of information? There's no right or wrong answer here. But you should be able to justify your answer.
 
 >Q. Which class is responsible for the number of available bays (and why)?
+The CarPark class, because it knows how many cars are there  and the total bays.
 >
 >Q. Which class is responsible for the current temperature (and why)?
+> The Sensor class, because sensors are used to detect things like temperature.
 >
 >Q. Which class is responsible for the time (and why)?
->
+>  The Display class, because it shows the time to people using the car park.
 --------
 
 ##### 2.7.3.1. Detour: implement available bays
@@ -470,7 +472,7 @@ This time, we will push the tag to the remote repository:
 Add a screenshot of the GitHub repository after pushing the tag, showing the CarPark class with the new methods:
 
 ```markdown
-![Added methods to the car park class](screenshots/methods-to-car-park.png)
+![Added methods to the car park class]
 ```
 
 Answer the following questions:
@@ -478,17 +480,19 @@ Answer the following questions:
 >
 > 1. **Which class is responsible for each of the following pieces of information (and why)?**
 >    - *The number of available bays*
->      `Answer here...`
+>      `Answer here... CarPark
 >    - *The current temperature*
->      `Answer here...`
+>      `Answer here...`Sensor
 >    - *The time*
->      `Answer here...`
+>      `Answer here...`Display
 >
 > 2. **What is the difference between an attribute and a property?**
 >    `Answer here...`
->
+>Attribute is a variable that stores data in a class or object.
+> Property is a special method that lets you get and set the variable using @property
 > 3. **Why do you think we used a dictionary to hold the data we passed the display? List at least one advantage and one disadvantage of this approach.**
->    `Answer here...`
+>    `Answer here...`Advantage: Easy to group and pass many values at once .
+> Disadvantage: we have to know the correct keys or it may cause errors.
 
 #### 2.7.5. Add a detect vehicle method to the Sensor class
 
