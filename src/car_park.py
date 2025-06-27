@@ -2,18 +2,19 @@ from display import Display
 from sensor import Sensor
 from pathlib import Path
 from datetime import datetime
+import json
+
 
 class CarPark:
     def __init__(self, location="Unknown", capacity=100, plates=None, displays=None, log_file=Path("log.txt")):
         self.sensors = None
         self.location = location
         self.capacity = capacity
-        self.plates = plates or []         # List of car plate numbers
-        self.displays = displays or []     # List of Display objects
+        self.plates = plates or []  # List of car plate numbers
+        self.displays = displays or []  # List of Display objects
         self.log_file = log_file if isinstance(log_file, Path) else Path(log_file)
         # create the file if it doesn't exist:
         self.log_file.touch(exist_ok=True)
-
 
     def __str__(self):
         return f"Car park at {self.location}, with {self.capacity} bays."
@@ -58,3 +59,22 @@ class CarPark:
         with self.log_file.open("a") as f:
             f.write(f"{plate} {action} at {datetime.now()}\n")
 
+    def write_config(self, config_file="config.json"):
+
+        config_file = Path(config_file)
+
+        data = {
+            "location": self.location,
+            "capacity": self.capacity,
+            "log_file": str(self.log_file)
+        }
+
+        with config_file.open("w") as f:
+            json.dump(data, f)
+
+    @classmethod
+    def from_config(cls, config_file=Path("config.json")):
+        config_file = config_file if isinstance(config_file, Path) else Path(config_file)
+        with config_file.open() as f:
+            config = json.load(f)
+        return cls(config["location"], config["capacity"], log_file=config["log_file"])
