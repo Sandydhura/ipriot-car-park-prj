@@ -10,12 +10,13 @@ class CarPark:
         self.plates = plates or []         # List of car plate numbers
         self.displays = displays or []     # List of Display objects
 
+
     def __str__(self):
         return f"Car park at {self.location}, with {self.capacity} bays."
 
     @property
     def available_bays(self):
-        return self.capacity - len(self.plates)
+        return max(0, self.capacity - len(self.plates))
 
     def update_displays(self):
         data = {
@@ -45,5 +46,5 @@ class CarPark:
             self.plates.remove(plate)
             self.update_displays()
         else:
-            print(f"Car {plate} not found.")
+            raise ValueError(f"Car {plate} not found.")
 
